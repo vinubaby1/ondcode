@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.deploySubpath": "",
+    "appService.defaultWebAppToDeploy": "/subscriptions/2cc45156-5e04-4d32-9464-aa3fc2851daf/resourceGroups/appsvc_windows_centralus/providers/Microsoft.Web/sites/ondgen"
+}

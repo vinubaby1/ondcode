@@ -1,0 +1,283 @@
+<html>
+
+<div>
+  <h2>Origin Combination</h2>
+
+  <textarea></textarea>
+</div>  
+<button onclick="create()">Generate Codes</button>
+<div id="result">
+
+</div>
+</html>
+
+<script>
+
+
+function createTable(tableData) {
+  var table = document.createElement('table');
+  var tableBody = document.createElement('tbody');
+
+  tableData.forEach(function(rowData) {
+    rowData.forEach(function(cellData) {
+      var row = document.createElement('tr');
+      var cell = document.createElement('td');
+      cell.appendChild(document.createTextNode(cellData));
+      row.appendChild(cell);
+      
+    tableBody.appendChild(row);
+    });
+  });
+
+  table.appendChild(tableBody);
+  document.body.appendChild(table);
+}
+
+var transit ="AUH";
+var d ="-";
+var rec=[];
+ 
+function create()
+{
+	for(var i=0;i<origin.length;i++)
+	{    
+    var og =[]; 
+    og.push(origin[i].Gateway1);
+		og.push(origin[i].Gateway2);
+		og.push(origin[i].Gateway3);
+		og.push(origin[i].Gateway4);
+    og.push(origin[i].Gateway5);
+     
+		for(var j=0;j<og.length;j++){
+      addRecord(origin[i].Origin, og[j]); 
+    } 
+	} 
+	
+	for(var i=0;i<rec.length;i++)
+	{
+		console.log(rec[i]);
+  } 
+  createTable([rec]);
+}
+
+function addRecord(origin, gateway)
+{
+    var rec=(origin + d + gateway + d + transit).replace("--","-"); 
+    //console.log("====>"+r)
+    for(var i=0;i<destination.length; i++)
+    {
+      var dg =[]; 
+      var r = rec;
+      if(destination[i].Gateway1!="") dg.push(destination[i].Gateway1);
+      if(destination[i].Gateway2!="") dg.push(destination[i].Gateway2);
+      if(destination[i].Gateway3!="") dg.push(destination[i].Gateway3);
+      if(destination[i].Gateway4!="") dg.push(destination[i].Gateway4);
+      if(destination[i].Gateway5!="") dg.push(destination[i].Gateway5);
+
+      if(dg.length<1)
+      { 
+          r+= d + destination[i].Destination;
+          //console.log("==================> Empty " + r);
+
+          checkAndAddRec(r);
+          continue;
+      }
+
+      for(var j=0;j<dg.length;j++)
+      {
+        { 
+          if(dg[j]!=undefined || dg[j]!="")
+          {
+            //console.log("dg" + j + dg[j]);
+            r += d + dg[j] + d + destination[i].Destination;
+            checkAndAddRec(r); 
+            r = rec;
+            continue;
+          }
+        }
+      }/**/
+    } 
+} 
+
+function checkAndAddRec(record)
+{
+    var org = record.substring(0,3);
+    var des = record.substring(record.length-3); 
+
+    if(org==des)
+    {
+      console.log("==================> ORG == DES :: " + org + "-" +des); 
+      return;
+    }
+
+		if(rec.find(x=>x==record)==undefined)
+    {	
+      rec.push(record);
+      //console.log("==================> loading " + record);
+    }
+} 
+
+var origin=[
+  {
+    "Origin": "HAM",
+    "Origin Flag": "Offline",
+    "Gateway1": "FRA",
+    "Gateway2": "DUS",
+    "Gateway3": "MUC",
+    "Gateway4": "",
+    "Gateway5": "",
+    "Gateway6": "",
+    "Gateway7": "",
+    "Gateway8": "",
+    "Gateway9": "",
+    "Gateway10": ""
+  },
+  {
+    "Origin": "FRA",
+    "Origin Flag": "Online",
+    "Gateway1": "MUC",
+    "Gateway2": "DUS",
+    "Gateway3": "",
+    "Gateway4": "",
+    "Gateway5": "",
+    "Gateway6": "",
+    "Gateway7": "",
+    "Gateway8": "",
+    "Gateway9": "",
+    "Gateway10": ""
+  },
+  {
+    "Origin": "BRU",
+    "Origin Flag": "Online",
+    "Gateway1": "AMS",
+    "Gateway2": "",
+    "Gateway3": "",
+    "Gateway4": "",
+    "Gateway5": "",
+    "Gateway6": "",
+    "Gateway7": "",
+    "Gateway8": "",
+    "Gateway9": "",
+    "Gateway10": ""
+  },
+  {
+    "Origin": "AMS",
+    "Origin Flag": "Online",
+    "Gateway1": "BRU",
+    "Gateway2": "",
+    "Gateway3": "",
+    "Gateway4": "",
+    "Gateway5": "",
+    "Gateway6": "",
+    "Gateway7": "",
+    "Gateway8": "",
+    "Gateway9": "",
+    "Gateway10": ""
+  },
+  {
+    "Origin": "BOM",
+    "Origin Flag": "Online",
+    "Gateway1": "",
+    "Gateway2": "",
+    "Gateway3": "",
+    "Gateway4": "",
+    "Gateway5": "",
+    "Gateway6": "",
+    "Gateway7": "",
+    "Gateway8": "",
+    "Gateway9": "",
+    "Gateway10": ""
+  }
+]
+
+var destination=[
+  {
+    "Destination": "BOM",
+    "DestinationFlag": "Online",
+    "Gateway1": "",
+    "Gateway2": "",
+    "Gateway3": "",
+    "Gateway4": "",
+    "Gateway5": "",
+    "Gateway6": "",
+    "Gateway7": "",
+    "Gateway8": "",
+    "Gateway9": "",
+    "Gateway10": ""
+  },
+  {
+    "Destination": "HAM",
+    "DestinationFlag": "Offline",
+    "Gateway1": "MUC",
+    "Gateway2": "DUS",
+    "Gateway3": "FRA",
+    "Gateway4": "",
+    "Gateway5": "",
+    "Gateway6": "",
+    "Gateway7": "",
+    "Gateway8": "",
+    "Gateway9": "",
+    "Gateway10": ""
+  },
+  {
+    "Destination": "BRU",
+    "DestinationFlag": "Online",
+    "Gateway1": "AMS",
+    "Gateway2": "",
+    "Gateway3": "",
+    "Gateway4": "",
+    "Gateway5": "",
+    "Gateway6": "",
+    "Gateway7": "",
+    "Gateway8": "",
+    "Gateway9": "",
+    "Gateway10": ""
+  },
+  {
+    "Destination": "FRA",
+    "DestinationFlag": "Online",
+    "Gateway1": "MUC",
+    "Gateway2": "",
+    "Gateway3": "",
+    "Gateway4": "",
+    "Gateway5": "",
+    "Gateway6": "",
+    "Gateway7": "",
+    "Gateway8": "",
+    "Gateway9": "",
+    "Gateway10": ""
+  }
+]
+
+
+
+
+
+
+
+
+    
+/*var r=(origin[i].Origin + d + g2 + d + transit).replace("--","-");
+checkAndAddRec(r);
+
+
+var r=(origin[i].Origin + d + g3 + d + transit).replace("--","-");
+checkAndAddRec(r);
+
+
+var r=(origin[i].Origin + d + g4 + d + transit).replace("--","-");
+checkAndAddRec(r);
+
+
+var r=(origin[i].Origin + d + g5 + d + transit).replace("--","-");
+checkAndAddRec(r); */
+
+
+
+		/*g1 = origin[i].Gateway1;
+		g2 = origin[i].Gateway2;
+		g3 = origin[i].Gateway3;
+		g4 = origin[i].Gateway4;
+		g5 = origin[i].Gateway5;*/
+
+</script>
