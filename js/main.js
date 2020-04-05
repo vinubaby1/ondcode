@@ -88,13 +88,13 @@ function CreateSecondParts()
         destinations.forEach(destination => {
             //console.log("====>"+destination.Destination);
             if(destination.Flag=="Online"){
-                addRecord(ctr + " # " + firstrec + d + destination.Destination);
-                ctr++;
+                var res= addRecord(ctr + " # " + firstrec + d + destination.Destination);
+                if(res==true)ctr++;
             }
 
             destination.Gateways.forEach(gateway => {
-                addRecord(ctr + " # " + firstrec + d + gateway.g + d + destination.Destination);
-                ctr++;
+                var res= addRecord(ctr + " # " + firstrec + d + gateway.g + d + destination.Destination);
+                if(res==true)ctr++;
             }); 
         });
     }); 
@@ -104,20 +104,24 @@ function CreateSecondParts()
 function addRecord(record)
 {
     console.log("Add ==>" + record);
-    var org = record.substring(0,3);
+    var ptr = record.search('#'); 
+    var org = record.substring(ptr+2,ptr+5);
     var des = record.substring(record.length-3); 
+    console.log("+++++++++++++++++++++++> ORG == DES :: '" + org + "'-'" +des); 
 
     if(org==des)
     {
-      //console.log("==================> ORG == DES :: " + org + "-" +des); 
+      console.log("==================> ORG == DES :: " + org + "-" +des); 
       //records.push(record +"---<b>[INVALID]</b>");  
-      return;
+      return false;
     }
 
 	if(records.find(x=>x==record)==undefined)
     {	
         records.push(record); 
     }
+
+    return true;
 }
 
 function Loaddata()
