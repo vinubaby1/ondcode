@@ -1,6 +1,6 @@
 var origins = [];
 var destinations = [];
-var transit =[];
+var transit
 const d = '-';
 
 var firstpart = [];
@@ -55,60 +55,13 @@ function CreateCodes()
     records = [];
     Loaddata();
     
-    virRec=[];
-    finRec=[];
-
     origins.forEach(org=>{
-        if(org.Flag=="Online")
-        {
-            virRec.push({"org":org.Origin, "transit":transit[0]});  
-        }
         org.Gateways.forEach(gateway=>{
-            virRec.push({"org":org.Origin, "orgg":gateway.g, "transit":transit[0]}); 
+            virRec.push({"org":org.Origin, "org-g":gateway}); 
         });
-    }); 
-    virRec.forEach(rec=>{
-        console.log(rec);
-    });
-    console.log("==================");
-
-    
-    virRec.forEach(r=>{
-        destinations.forEach(dest=>{
-            if(dest.Flag=="Online")
-            {  
-                 finRec.push({"org":r.org,"orgg":r.orgg,"transit":r.transit, "dest":dest.Destination});
-            }
-            dest.Gateways.forEach(g=>{
-                finRec.push({"org":r.org,"orgg":r.orgg,"transit":r.transit, "destg":g.g, "dest":dest.Destination});
-             });
-        }); 
-    });
-console.log(finRec.length);
-    finRec.forEach(finrec=>{
-        var g1 =finrec.orgg==undefined?"":finrec.orgg;
-        var g2 =finrec.destg==undefined?"":finrec.destg;
-            
-         console.log((finrec.org+d+g1+d+finrec.transit+d+g2+d+finrec.dest).replace('--','-'));
     });
 
-/*
-    virRec.forEach(rec=>{ 
-        destinations.forEach(dest=>{
-            if(dest.Flag=="Online")
-            {
-                virRec.forEach(rec=>{
-                    rec.dest=dest.Destination;
-                    finRec.push(rec);
-                });
-            }
-        });
-        
-    });
-*/
- 
-
-        origins.forEach(element => {
+    origins.forEach(element => {
         //console.log(element);
         var rec;
         if(element.Flag=="Online"){
@@ -145,13 +98,13 @@ function CreateSecondParts()
                 {
                     var rec = firstrec + d + des.Destination;
                     addRecord(rec);
-                    //console.log(rec);
+                    console.log(rec);
                 }
 
                 des.Gateways.forEach(gateway=>{
                     var rec = firstrec + d + gateway.g + d + des.Destination;
                     addRecord(rec);
-                    //console.log(rec);
+                    console.log(rec);
                 });
         });
     });
@@ -209,7 +162,7 @@ function Loaddata()
 { 
     var origindatalines = document.getElementById("origin").value.split("\n")
     var destinationdatalines = document.getElementById("destination").value.split("\n")
-    transit = document.getElementById("transit").value.split("\n");
+    transit = document.getElementById("transit").value
     
     LoadOrigin(origindatalines);
     LoadDestination(destinationdatalines); 

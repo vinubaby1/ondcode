@@ -11,6 +11,11 @@
 	
 </head>
 <body> 
+	<form target="">
+		<input type="file" accept="image/*;capture=camera">
+		<input type="submit">
+	</form>
+
 	<div class="container-contact100">
 		<div class="wrap-contact100"> 
 				<span class="contact100-form-title" style="padding-bottom: 10px; "> OND Code generator</span>
@@ -19,11 +24,11 @@
 					<span class="label-input100">Origin Records</span>
 					<textarea class="input100" type="text" id="origin" name="origin" 
 					placeholder="Origin, OriginFlag, G1, G2, G3, G4, G5, G6, G6">
-HAM,Offline,FRA,DUS,MUC
-FRA,Online,MUC,DUS
-BRU,Online,AMS
-AMS,Online,BRU
-BOM,Online</textarea>
+HAM,Online,FRA,DUS,MUC</textarea><!--
+	FRA,Online,MUC,DUS
+	BRU,Online,AMS
+	AMS,Online,BRU
+	BOM,Online-->
 				</div>
  
 				<div class="wrap-input100 validate-input bg1">
@@ -35,11 +40,11 @@ BOM,Online</textarea>
 					<span class="label-input100">Destination Records</span>
 					<textarea  class="input100" type="text" id="destination" name="destination" 
 					placeholder="Destination, DestinationFlag, G1, G2, G3, G4, G5, G6, G6">
-BOM,Online
+BOM,Online,DEL</textarea><!--
+	BRU,Online,AMS
 HAM,Offline,MUC,DUS,FRA
-BRU,Online,AMS
-AMS,Online,BRU
-FRA,Online,MUC</textarea>
+	AMS,Online,BRU
+	FRA,Online,MUC-->
 				</div>
  
 
